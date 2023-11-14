@@ -1,6 +1,7 @@
-import { Container } from "../../components/container"
+import { Container } from "../../components/container";
 
 export const Home = () => {
+
   return (
     <Container>
       <section className="bg-white p-4 rounded-lg w-full max-w-3xl mx-auto flex justify-center items-center gap-2">
