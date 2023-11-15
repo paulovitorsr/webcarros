@@ -1,4 +1,4 @@
-
+import { useEffect, useContext } from "react";
 import LogoImg from "../../assets/logo.svg";
 import {Link, useNavigate} from "react-router-dom";
 import { Container } from "../../components/container";
@@ -9,6 +9,7 @@ import {createUserWithEmailAndPassword, signOut, updateProfile} from "firebase/a
 
 import { Input } from "../../components/input";
 import { Button } from "../../components/Button";
+import {AuthContext} from "../../contexts/AuthContexts"
 
 //npm install @hookform/resolvers
 //npm install zod
@@ -18,7 +19,7 @@ import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+
 
 const schema = z.object({
   email: z.string().email("Email não é válido").nonempty("O campo email é obrigatório"),
@@ -29,6 +30,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export const Register = () => {
+  const {handleInfoUser} = useContext(AuthContext);
   const navigate = useNavigate()
   const {register, handleSubmit, formState: {errors} } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -48,6 +50,12 @@ export const Register = () => {
     .then(async  (user) => {
       await updateProfile(user.user, {
         displayName: data.name
+      })
+
+      handleInfoUser({
+        name: data.name,
+        email: data.email,
+        uid: user.user.uid
       })
 
       navigate("/dashboard", {replace: true})
