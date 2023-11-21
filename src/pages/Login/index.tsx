@@ -15,6 +15,7 @@ import { Button } from "../../components/Button";
 //npm install zod
 //npm install react-hook-form
 //npm install react-hot-toast
+//npm i swiper
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
